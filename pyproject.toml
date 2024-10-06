@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scarlesstagging"
+version = "0.0.1"
+authors = [
+	{ name = "Richard Wheeler", email="richardwheeler@outlook.com" },
+]
+description = "Module for designing primers for the Tiengwe scarless tagging scheme."
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+	"tqdm",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/zephyris/scarlesstagging"
