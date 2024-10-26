@@ -225,6 +225,9 @@ class ScarlessTagging:
         return errors, warnings, warnings_n
     
     def design_primers(self, gene_id: str, terminus: str, plasmid_system: str, tag: str, drug: str):
+        tag = tag.lower()
+        drug = drug.lower()
+
         # guide rna length (excluding pam ngg), bases
         guide_length = 20
 
@@ -241,19 +244,19 @@ class ScarlessTagging:
             binding_c_forward = "ggttctggtagtggttccgg".lower()
             binding_c_reverse = "gcacaggtctctcaaattgg".lower()
             print("Warning: This primer design does not give scarless integration")
-        elif plasmid_system == "2a":
+        elif plasmid_system == "prext2a":
             if tag == "mng":
-                binding_n_reverse = "ATGGACGAGCTGTACAAG".lower()
-                binding_c_forward = "GTGTCCAAGGGCGAGGAG".lower()
+                binding_n_reverse = "gtgcaagcgagcttggcg".lower()
+                binding_c_forward = "ggtaccggttctggtagt".lower()
             if tag == "msc":
-                binding_n_reverse = "atggacgagctgtacaag".lower()
-                binding_c_forward = "GTGAGCAAGGGCGAGGCA".lower()
+                binding_n_reverse = "gtgcaagcgagcttggcg".lower()
+                binding_c_forward = "ggtaccggttctggtagt".lower()
             if drug == "bsr":
-                binding_n_forward = "ATGGCCAAGCCGCTCAGC".lower()
-                binding_c_reverse = "TACGTCTGGGAGGGCTAG".lower()
+                binding_n_forward = "atgcctttgtctcaagaagaa".lower()
+                binding_c_reverse = "ACCAATCAAGATCCCTTGGATTAA".lower()
             if drug == "pac":
-                binding_n_forward = "ATGACGGAGTACAAACCC".lower()
-                binding_c_reverse = "CGCAAGCCGGGCGCGTGA".lower()
+                binding_n_forward = "ATGACTGAATACAAGCCAACG".lower()
+                binding_c_reverse = "ACCAATCAAGATCCCTTGGATTAA".lower()
 
         sgrna_t7 = "gaaattaatacgactcactatagg".lower()
         sgrna_hairpin = "gttttagagctagaaatagc".lower()
