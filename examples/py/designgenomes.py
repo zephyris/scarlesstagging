@@ -45,22 +45,22 @@ for specie in species:
             "plasmid_system": "ppot-compatible",
         },
         {
-            "plasmid_system": "2a",
+            "plasmid_system": "prext2a-scarless",
             "tag": "mng",
             "drug": "bsr",
         },
         {
-            "plasmid_system": "2a",
+            "plasmid_system": "prext2a-scarless",
             "tag": "msc",
             "drug": "pac",
         },
         {
-            "plasmid_system": "2a",
+            "plasmid_system": "prext2a-scarless",
             "tag": "mng",
             "drug": "pac",
         },
         {
-            "plasmid_system": "2a",
+            "plasmid_system": "prext2a-scarless",
             "tag": "msc",
             "drug": "bsr",
         },
@@ -71,7 +71,7 @@ for specie in species:
     def process_setting(setting):
         primer_results = []
         plasmid_system = setting["plasmid_system"]
-        if plasmid_system == "2a":
+        if plasmid_system == "prext2a-scarless":
             tag = setting["tag"]
             drug = setting["drug"]
         else:
