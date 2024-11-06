@@ -238,13 +238,17 @@ class ScarlessTagging:
         maximum_primer_length = 100
 
         # primer binding sites
+        binding_c_forward = None
+        binding_c_reverse = None
+        binding_n_forward = None
+        binding_n_reverse = None
         if plasmid_system == "ppot-compatible":
             binding_n_forward = "gtataatgcagacctgctgc".lower()
             binding_n_reverse = "ctggatcaggatcgggtagt".lower()
             binding_c_forward = "ggttctggtagtggttccgg".lower()
             binding_c_reverse = "gcacaggtctctcaaattgg".lower()
             print("Warning: This primer design does not give scarless integration")
-        elif plasmid_system == "prext2a":
+        elif plasmid_system == "prext2a-scarless":
             if tag == "mng":
                 binding_n_reverse = "gtgcaagcgagcttggcg".lower()
                 binding_c_forward = "ggtaccggttctggtagt".lower()
@@ -257,6 +261,10 @@ class ScarlessTagging:
             if drug == "pac":
                 binding_n_forward = "ATGACTGAATACAAGCCAACG".lower()
                 binding_c_reverse = "ACCAATCAAGATCCCTTGGATTAA".lower()
+        else:
+            raise ValueError("Plasmid system \" + plasmid_system + \" not recognised")
+        if binding_n_forward is None or binding_n_reverse is None or binding_c_forward is None or binding_c_reverse is None:
+            raise ValueError("Plasmid system \" + plasmid_system + \" not recognised")
 
         sgrna_t7 = "gaaattaatacgactcactatagg".lower()
         sgrna_hairpin = "gttttagagctagaaatagc".lower()
