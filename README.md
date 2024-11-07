@@ -7,3 +7,6 @@ To design primers for your genes of interest, go to [this collaboratory notebook
 The primer design tool is written as a Python module which can also be installed for more advanced usage. Install using `python3 -m pip install git+https://github.com/zephyris/scarlesstagging`. You can find some example code in `examples/py/`.
 
 This primer design tool fetches sequence data from [TriTrypDB.org](https://tritrypdb.org/) and depends on their continued funding and operation to work.
+
+The full description of how this tagging system works, how the primer design strategy works and validation of the system is available on BioRxiv: [Carbajo et al. DOI:10.1101/2024.11.02.621556](https://doi.org/10.1101/2024.11.02.621556).
+If you use this tool for your work then please cite this paper.
