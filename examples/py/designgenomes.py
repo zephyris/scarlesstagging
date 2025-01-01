@@ -1,11 +1,15 @@
 from scarlesstagging import ScarlessTagging
-import requests
+import requests, os
 import concurrent.futures
 from tqdm import tqdm
 
 # base url
 version = "68"
 base_url = "https://tritrypdb.org/common/downloads/release-"+version+"/"
+
+outdir = "tritrypdb-genomes-v" + str(version)
+if not os.path.exists(outdir):
+    os.mkdir(outdir)
 
 species = [
     "TbruceiTREU927",
@@ -44,6 +48,7 @@ for specie in species:
         {
             "plasmid_system": "ppot-compatible",
         },
+        """
         {
             "plasmid_system": "prext2a-scarless",
             "tag": "mng",
@@ -64,6 +69,7 @@ for specie in species:
             "tag": "msc",
             "drug": "bsr",
         },
+        """
     ]
 
     scarlesstagging = ScarlessTagging()
@@ -79,14 +85,33 @@ for specie in species:
             drug = None
 
         if plasmid_system == "ppot-compatible":
-            file = open(specie+"_"+plasmid_system+".txt", "w")
+            outfile = outdir + "/" + specie + "_" + plasmid_system + ".txt"
         else:
-            file = open(specie+"_"+plasmid_system+"-"+tag+"-"+drug+".txt", "w")
-        file.write("\t".join(["Gene ID", "UF", "UR", "USG", "UERR", "DF", "DR", "DSG", "DERR"])+"\r\n")
+            outfile = outdir + "/" + specie + "_" + plasmid_system + "-" + tag + "-" + drug + ".txt"
+        
+        # check if already predicted
+        partial = False
+        if os.path.exists(outfile):
+            # read data
+            predicted = open(outfile, "r").read().split("\n")
+            # parse lines to get predicted gene IDs
+            if len(predicted) > 0:
+                partial = True
+            predicted = [x.split("\t")[0] for x in predicted[1:] if x != "" and x != "###completed###"]
+        # open output, appending
+        file = open(outfile, "a")
+        if partial:
+            # write header 
+            file.write("\t".join(["Gene ID", "UF", "UR", "USG", "UERR", "DF", "DR", "DSG", "DERR"])+"\r\n")
+        # for all gene ids
         for gene_id in gene_ids:
+            # unless already predicted
+            if gene_id in predicted:
+                continue
+            # do the prediction
             result = scarlesstagging.design_primers(gene_id, terminus, plasmid_system, tag, drug)
             primer_results.append(result)
-
+            # print a nicely formatted output to show progress
             for err in ["uerr", "derr"]:
                 if result[err] is None:
                     result[err] = "None"
@@ -95,14 +120,16 @@ for specie in species:
             for key in result:
                 print("\t".join([str(x) for x in [key, result[key]]]))
             print("")
+            # write output line
             file.write("\t".join([str(x) for x in [result["id"], result["uf"], result["ur"], result["usg"], result["uerr"], result["df"], result["dr"], result["dsg"], result["derr"]]])+"\r\n")
+        if partial:
+            file.write("###completed###" + "\r\n")
         file.close()
     
     """
     for setting in settings:
         process_setting(setting)
     """
-
     with concurrent.futures.ThreadPoolExecutor() as executor:
         futures = []
         for setting in settings:
@@ -111,3 +138,4 @@ for specie in species:
 
         for future in tqdm(concurrent.futures.as_completed(futures), total=len(futures)):
             pass
+    
