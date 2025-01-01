@@ -28,4 +28,13 @@ else:
 scarlesstagging = ScarlessTagging()
 primer_results = []
 for gene_id in gene_ids:
-    primer_results.append(scarlesstagging.design_primers(gene_id, terminus, plasmid_system, tag, drug))
+    result = scarlesstagging.design_primers(gene_id, terminus, plasmid_system, tag, drug)
+    primer_results.append(result)
+
+    for err in ["uerr", "derr"]:
+        if result[err] is None:
+            result[err] = "None"
+        else:
+            result[err] = ", ".join(result[err])
+    for key in result:
+        print("\t".join([str(x) for x in [key, result[key]]]))
