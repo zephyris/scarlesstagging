@@ -1,6 +1,6 @@
 
 from urllib.request import urlopen
-import math
+import math, time
 
 class ScarlessTagging:
     def __init__(self):
@@ -33,9 +33,22 @@ class ScarlessTagging:
         if url in self.get_sequence_cache:
             return self.get_sequence_cache[url]
         # grab from url
-        response = urlopen(url)
-        string = response.read().decode(response.info().get_param("charset") or "utf-8-sig")
-        result = "".join(string.splitlines()[1:])
+        max_retries = 1000
+        retry = 0
+        while retry < max_retries:
+            try:
+                response = urlopen(url)
+                string = response.read().decode(response.info().get_param("charset") or "utf-8-sig")
+                result = "".join(string.splitlines()[1:])
+                break
+            except KeyboardInterrupt:
+                raise KeyboardInterrupt
+            except:
+                print("Failed to retrieve sequence, retrying. Attempt", retry, "of", max_retries)
+                time.sleep(1)
+                retry += 1
+        if retry >= max_retries:
+            raise Exception("Failed to retrieve sequence after", max_retries, "attempts")
         # cache response and return
         self.get_sequence_cache[url] = result
         return result
@@ -382,4 +395,3 @@ class ScarlessTagging:
                     if len(warnings) > 0:
                         primer_result["derr"] = warnings
         return primer_result
-
