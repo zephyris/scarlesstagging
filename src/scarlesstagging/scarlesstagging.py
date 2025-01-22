@@ -383,7 +383,7 @@ class ScarlessTagging:
                     primer_result["dr"] = downstream_reverse
                     # downstream sgrna primer
                     if pam_result[1] == "forward":
-                        downstream_sgrna_sequence, warning = self.get_sequence(gene_id, "cds", "end", [-pam_search_range + pam_result[0] - guide_length - 3, -pam_search_range + pam_result[0] - 3])
+                        downstream_sgrna_sequence, warning = self.get_sequence(gene_id, "cds", "end", [-pam_search_range + pam_result[0] - guide_length - 3 + 1, -pam_search_range + pam_result[0] - 3 + 1])
                         if warning: warnings += warning
                         downstream_sgrna = sgrna_t7 + downstream_sgrna_sequence + sgrna_hairpin
                     elif pam_result[1] == "reverse":
