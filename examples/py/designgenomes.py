@@ -96,6 +96,8 @@ for specie in species:
             if len(predicted) > 0:
                 partial = True
             predicted = [x.split("\t")[0] for x in predicted[1:] if x != "" and x != "###completed###"]
+        else:
+            predicted = []
         # open output, appending
         file = open(outfile, "a")
         if partial:
