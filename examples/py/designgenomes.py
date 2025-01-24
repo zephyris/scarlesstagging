@@ -48,7 +48,6 @@ for specie in species:
         {
             "plasmid_system": "ppot-compatible",
         },
-        """
         {
             "plasmid_system": "prext2a-scarless",
             "tag": "mng",
@@ -69,7 +68,6 @@ for specie in species:
             "tag": "msc",
             "drug": "bsr",
         },
-        """
     ]
 
     scarlesstagging = ScarlessTagging()
