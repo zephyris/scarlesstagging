@@ -8,5 +8,5 @@ The primer design tool is written as a Python module which can also be installed
 
 This primer design tool fetches sequence data from [TriTrypDB.org](https://tritrypdb.org/) and depends on their continued funding and operation to work.
 
-The full description of how this tagging system works, how the primer design strategy works and validation of the system is available on BioRxiv: [Carbajo et al. DOI:10.1101/2024.11.02.621556](https://doi.org/10.1101/2024.11.02.621556).
+The full description of how this tagging system works, how the primer design strategy works and validation of the system is available on BioRxiv: [Carbajo et al. 2025](https://doi.org/10.1098/rsob.240334).
 If you use this tool for your work then please cite this paper.
