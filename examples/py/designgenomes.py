@@ -19,7 +19,6 @@ species = [
     "TvivaxY486"
     "TbruceiEATRO1125",
     "TbruceiLister427_2018",
-    "TcongolenseIL3000_2019",
     "TcongolenseTc1_148"
 ]
 
