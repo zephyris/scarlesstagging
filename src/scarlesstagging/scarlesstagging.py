@@ -238,8 +238,8 @@ class ScarlessTagging:
         return errors, warnings, warnings_n
     
     def design_primers(self, gene_id: str, terminus: str, plasmid_system: str, tag: str, drug: str):
-        tag = tag.lower()
-        drug = drug.lower()
+        if tag is not None: tag = tag.lower()
+        if drug is not None: drug = drug.lower()
 
         # guide rna length (excluding pam ngg), bases
         guide_length = 20
